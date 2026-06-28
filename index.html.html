@@ -1,0 +1,427 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>GoPhish — Information Assurance Lab</title>
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body { background: #0D1117; color: #E6EDF3; font-family: Arial, sans-serif; }
+    nav {
+      position: fixed; top: 0; left: 0; right: 0;
+      background: #0D1117; border-bottom: 1px solid #30363D;
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 0 32px; height: 56px; z-index: 100;
+    }
+    .nav-logo { color: #1E90FF; font-size: 16px; font-weight: bold; }
+    .nav-links { display: flex; gap: 8px; }
+    .nav-links a { color: #8B949E; text-decoration: none; padding: 6px 14px; border-radius: 6px; }
+    .nav-links a:hover, .nav-links a.active { background: #21262D; color: #E6EDF3; }
+    .page { display: none; min-height: 100vh; padding-top: 56px; }
+    .page.active { display: block; }
+
+    /* DASHBOARD BARS */
+    .bar-track { flex:1; background:#21262D; border-radius:4px; height:10px; overflow:hidden; }
+    .bar-fill { height:100%; border-radius:4px; transition: width 1.4s cubic-bezier(0.22,1,0.36,1); }
+    .bar-row { display:flex; align-items:center; gap:12px; margin-bottom:14px; }
+    .bar-lbl { font-size:13px; color:#8B949E; width:80px; }
+    .bar-cnt { font-size:13px; color:#E6EDF3; width:30px; text-align:right; }
+
+    /* REDDIT STYLES */
+    .reddit-wrap { background:#fff; border-radius:8px; padding:28px 24px; max-width:280px; margin:0 auto; }
+    .reddit-logo { text-align:center; margin-bottom:18px; }
+    .reddit-input {
+      width:100%; padding:10px 12px; margin-bottom:10px;
+      border:1px solid #edeff1; border-radius:4px;
+      font-size:13px; color:#1c1c1c; background:#f6f7f8;
+      font-family:Arial,sans-serif;
+    }
+    .reddit-btn {
+      width:100%; padding:10px; background:#FF4500; color:#fff;
+      border:none; border-radius:20px; font-size:14px; font-weight:700;
+      cursor:pointer; margin-top:4px;
+    }
+    .reddit-btn:hover { background:#e03d00; }
+
+    /* ABOUT */
+    .team-card { display:flex; align-items:center; gap:12px; background:#161B22; border:1px solid #30363D; border-radius:10px; padding:14px 18px; margin-bottom:10px; }
+    .team-avatar { width:40px; height:40px; border-radius:50%; background:#1E90FF; display:flex; align-items:center; justify-content:center; font-weight:700; font-size:14px; }
+  </style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <div class="nav-logo">🎣 GoPhish Lab</div>
+  <div class="nav-links">
+    <a href="#" class="active" onclick="showPage('home',this)">Home</a>
+    <a href="#" onclick="showPage('demo',this)">Live Demo</a>
+    <a href="#" onclick="showPage('dashboard',this)">Dashboard</a>
+    <a href="#" onclick="showPage('about',this)">About</a>
+  </div>
+</nav>
+
+<!-- ======== PAGE 1: HOME ======== -->
+<div class="page active" id="page-home">
+
+  <div style="padding:80px 48px 60px; border-bottom:1px solid #30363D;">
+    <div style="font-size:12px; color:#1E90FF; letter-spacing:2px; margin-bottom:16px;">INFORMATION ASSURANCE LAB</div>
+    <h1 style="font-size:48px; font-weight:700; line-height:1.1; margin-bottom:20px;">
+      Phishing Simulation <br><span style="color:#1E90FF;">with GoPhish</span>
+    </h1>
+    <p style="color:#8B949E; font-size:17px; max-width:560px; margin-bottom:36px;">
+      A controlled, ethical demonstration of how phishing attacks are designed,
+      delivered, and analysed using the GoPhish framework.
+    </p>
+    <div style="display:flex; gap:40px; margin-top:40px; padding-top:32px; border-top:1px solid #30363D; flex-wrap:wrap;">
+      <div>
+        <div style="font-size:28px; color:#1E90FF; font-weight:700;">150</div>
+        <div style="font-size:12px; color:#8B949E;">Emails Sent</div>
+      </div>
+      <div>
+        <div style="font-size:28px; color:#1E90FF; font-weight:700;">62.7%</div>
+        <div style="font-size:12px; color:#8B949E;">Open Rate</div>
+      </div>
+      <div>
+        <div style="font-size:28px; color:#1E90FF; font-weight:700;">40.7%</div>
+        <div style="font-size:12px; color:#8B949E;">Click Rate</div>
+      </div>
+      <div>
+        <div style="font-size:28px; color:#E74C3C; font-weight:700;">18.7%</div>
+        <div style="font-size:12px; color:#8B949E;">Credentials Stolen</div>
+      </div>
+    </div>
+  </div>
+
+  <div style="padding:52px 48px; border-bottom:1px solid #30363D;">
+    <div style="font-size:12px; color:#1E90FF; letter-spacing:2px; margin-bottom:8px;">FEATURES</div>
+    <h2 style="font-size:26px; font-weight:600; margin-bottom:24px;">What GoPhish Can Do</h2>
+    <div style="display:grid; grid-template-columns:repeat(auto-fit,minmax(220px,1fr)); gap:16px;">
+      <div style="background:#161B22; border:1px solid #30363D; border-radius:12px; padding:24px;">
+        <div style="font-size:24px; margin-bottom:12px;">📊</div>
+        <h3 style="font-size:15px; margin-bottom:6px;">Web Dashboard</h3>
+        <p style="font-size:13px; color:#8B949E;">Manage all campaigns from a clean browser-based control panel.</p>
+      </div>
+      <div style="background:#161B22; border:1px solid #30363D; border-radius:12px; padding:24px;">
+        <div style="font-size:24px; margin-bottom:12px;">✉️</div>
+        <h3 style="font-size:15px; margin-bottom:6px;">Email Templates</h3>
+        <p style="font-size:13px; color:#8B949E;">Create convincing phishing emails with HTML formatting and personalisation.</p>
+      </div>
+      <div style="background:#161B22; border:1px solid #30363D; border-radius:12px; padding:24px;">
+        <div style="font-size:24px; margin-bottom:12px;">🌐</div>
+        <h3 style="font-size:15px; margin-bottom:6px;">Page Cloning</h3>
+        <p style="font-size:13px; color:#8B949E;">Automatically mirrors any website to create a fake login page.</p>
+      </div>
+      <div style="background:#161B22; border:1px solid #30363D; border-radius:12px; padding:24px;">
+        <div style="font-size:24px; margin-bottom:12px;">📈</div>
+        <h3 style="font-size:15px; margin-bottom:6px;">Live Analytics</h3>
+        <p style="font-size:13px; color:#8B949E;">Tracks opens, clicks, and submissions in real time.</p>
+      </div>
+    </div>
+  </div>
+
+  <div style="padding:52px 48px;">
+    <div style="font-size:12px; color:#1E90FF; letter-spacing:2px; margin-bottom:8px;">HOW IT WORKS</div>
+    <h2 style="font-size:26px; font-weight:600; margin-bottom:24px;">The Phishing Attack Flow</h2>
+    <div style="display:flex; gap:12px; flex-wrap:wrap; align-items:center;">
+      <div style="flex:1; min-width:140px; background:#161B22; border:1px solid #30363D; border-radius:10px; padding:18px;">
+        <div style="font-size:11px; color:#1E90FF; margin-bottom:6px;">STEP 01</div>
+        <h4 style="font-size:13px; margin-bottom:4px;">Email Sent</h4>
+        <p style="font-size:12px; color:#8B949E;">Phishing email delivered to target inbox</p>
+      </div>
+      <div style="color:#484F58; font-size:20px;">→</div>
+      <div style="flex:1; min-width:140px; background:#161B22; border:1px solid #30363D; border-radius:10px; padding:18px;">
+        <div style="font-size:11px; color:#1E90FF; margin-bottom:6px;">STEP 02</div>
+        <h4 style="font-size:13px; margin-bottom:4px;">Email Opened</h4>
+        <p style="font-size:12px; color:#8B949E;">Victim opens email, tracking pixel fires</p>
+      </div>
+      <div style="color:#484F58; font-size:20px;">→</div>
+      <div style="flex:1; min-width:140px; background:#161B22; border:1px solid #30363D; border-radius:10px; padding:18px;">
+        <div style="font-size:11px; color:#1E90FF; margin-bottom:6px;">STEP 03</div>
+        <h4 style="font-size:13px; margin-bottom:4px;">Link Clicked</h4>
+        <p style="font-size:12px; color:#8B949E;">Victim clicks and lands on fake Reddit page</p>
+      </div>
+      <div style="color:#484F58; font-size:20px;">→</div>
+      <div style="flex:1; min-width:140px; background:#161B22; border:1px solid #30363D; border-radius:10px; padding:18px;">
+        <div style="font-size:11px; color:#1E90FF; margin-bottom:6px;">STEP 04</div>
+        <h4 style="font-size:13px; margin-bottom:4px;">Credentials Stolen</h4>
+        <p style="font-size:12px; color:#8B949E;">Username and password captured</p>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<!-- ======== PAGE 2: LIVE DEMO ======== -->
+<div class="page" id="page-demo">
+  <div style="padding:52px 48px;">
+    <div style="font-size:12px; color:#1E90FF; letter-spacing:2px; margin-bottom:8px;">LIVE DEMO</div>
+    <h2 style="font-size:26px; font-weight:600; margin-bottom:24px;">Fake Reddit Login Page</h2>
+
+    <div style="display:grid; grid-template-columns:1fr 1fr; gap:32px; align-items:start;">
+
+      <!-- LEFT: Fake Reddit Login -->
+      <div>
+        <div style="background:#21262D; border:1px solid #30363D; border-radius:12px; overflow:hidden;">
+          <div style="background:#161B22; border-bottom:1px solid #30363D; padding:10px 16px; display:flex; align-items:center; gap:8px;">
+            <span style="display:inline-block;width:10px;height:10px;border-radius:50%;background:#E74C3C;"></span>
+            <span style="display:inline-block;width:10px;height:10px;border-radius:50%;background:#F39C12;"></span>
+            <span style="display:inline-block;width:10px;height:10px;border-radius:50%;background:#27AE60;"></span>
+            <span style="flex:1; background:#0D1117; border:1px solid #30363D; border-radius:6px; padding:4px 12px; font-size:11px; color:#E74C3C; font-family:monospace;">
+              reddit-account-verify.net/login
+            </span>
+          </div>
+          <div style="padding:28px 24px; background:#dae0e6;">
+            <div class="reddit-wrap">
+              <div class="reddit-logo">
+                <div style="font-size:36px;">🤖</div>
+                <div style="font-size:22px; font-weight:800; color:#FF4500;">reddit</div>
+              </div>
+              <div id="login-form">
+                <input class="reddit-input" id="rd-user" type="text" placeholder="Username">
+                <input class="reddit-input" id="rd-pass" type="password" placeholder="Password">
+                <button class="reddit-btn" onclick="submitPhish()">Log In</button>
+                <p style="text-align:center; font-size:11px; color:#878a8c; margin-top:14px;">
+                  New to Reddit? <span style="color:#0079d3; cursor:pointer;">Sign Up</span>
+                </p>
+              </div>
+              <div id="caught-screen" style="display:none; text-align:center; padding:10px 0;">
+                <div style="font-size:36px; margin-bottom:10px;">⚠️</div>
+                <div style="font-size:16px; font-weight:700; color:#E74C3C; margin-bottom:8px;">You've been phished!</div>
+                <p style="font-size:12px; color:#666; margin-bottom:14px;">Your credentials were just captured. This is a simulation — no real data was stored.</p>
+                <button onclick="resetDemo()" style="background:#FF4500; color:#fff; border:none; border-radius:20px; padding:8px 20px; cursor:pointer; font-weight:700;">Try Again</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- RIGHT: Server Log -->
+      <div>
+        <div style="background:#0D1117; border:1px solid #30363D; border-radius:12px; padding:20px;">
+          <div style="font-size:12px; color:#1E90FF; margin-bottom:12px; font-family:monospace;">📡 GoPhish Server Log</div>
+          <div id="server-log" style="font-family:monospace; font-size:12px; color:#27AE60; min-height:120px; line-height:1.8;">
+            <div style="color:#8B949E;">[System] Waiting for target interaction...</div>
+          </div>
+        </div>
+        <div style="margin-top:16px; background:rgba(231,76,60,.06); border:1px solid rgba(231,76,60,.2); border-radius:10px; padding:18px;">
+          <div style="font-size:14px; font-weight:600; color:#E74C3C; margin-bottom:6px;">⚠️ What just happened?</div>
+          <p style="font-size:13px; color:#8B949E; line-height:1.7;">
+            The URL looks like Reddit but it is a fake domain. GoPhish hosts this cloned page and captures everything you type. This is exactly how real attackers steal credentials.
+          </p>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<!-- ======== PAGE 3: DASHBOARD ======== -->
+<div class="page" id="page-dashboard">
+  <div style="padding:52px 48px;">
+    <div style="font-size:12px; color:#1E90FF; letter-spacing:2px; margin-bottom:8px;">ANALYTICS</div>
+    <h2 style="font-size:26px; font-weight:600; margin-bottom:24px;">Campaign Dashboard</h2>
+
+    <div style="display:grid; grid-template-columns:repeat(auto-fit,minmax(160px,1fr)); gap:16px; margin-bottom:32px;">
+      <div style="background:#161B22; border:1px solid #30363D; border-radius:12px; padding:20px;">
+        <div style="font-size:12px; color:#8B949E; margin-bottom:6px;">Emails Sent</div>
+        <div id="m-sent" style="font-size:32px; font-weight:700; color:#1E90FF;">0</div>
+      </div>
+      <div style="background:#161B22; border:1px solid #30363D; border-radius:12px; padding:20px;">
+        <div style="font-size:12px; color:#8B949E; margin-bottom:6px;">Opened</div>
+        <div id="m-open" style="font-size:32px; font-weight:700; color:#F39C12;">0</div>
+        <div id="m-open-pct" style="font-size:11px; color:#8B949E;">— open rate</div>
+      </div>
+      <div style="background:#161B22; border:1px solid #30363D; border-radius:12px; padding:20px;">
+        <div style="font-size:12px; color:#8B949E; margin-bottom:6px;">Clicked</div>
+        <div id="m-click" style="font-size:32px; font-weight:700; color:#1E90FF;">0</div>
+        <div id="m-click-pct" style="font-size:11px; color:#8B949E;">— click rate</div>
+      </div>
+      <div style="background:#161B22; border:1px solid #30363D; border-radius:12px; padding:20px;">
+        <div style="font-size:12px; color:#8B949E; margin-bottom:6px;">Compromised</div>
+        <div id="m-submit" style="font-size:32px; font-weight:700; color:#E74C3C;">0</div>
+        <div id="m-submit-pct" style="font-size:11px; color:#8B949E;">— compromise rate</div>
+      </div>
+    </div>
+
+    <div style="background:#161B22; border:1px solid #30363D; border-radius:12px; padding:24px; margin-bottom:20px;">
+      <div style="font-size:13px; font-weight:600; margin-bottom:18px;">Campaign Funnel</div>
+      <div class="bar-row">
+        <span class="bar-lbl">Sent</span>
+        <div class="bar-track"><div class="bar-fill" id="bar-sent" style="width:0%;background:#1E90FF;"></div></div>
+        <span class="bar-cnt" id="bc-sent">0</span>
+      </div>
+      <div class="bar-row">
+        <span class="bar-lbl">Opened</span>
+        <div class="bar-track"><div class="bar-fill" id="bar-open" style="width:0%;background:#F39C12;"></div></div>
+        <span class="bar-cnt" id="bc-open">0</span>
+      </div>
+      <div class="bar-row">
+        <span class="bar-lbl">Clicked</span>
+        <div class="bar-track"><div class="bar-fill" id="bar-click" style="width:0%;background:#1E90FF;"></div></div>
+        <span class="bar-cnt" id="bc-click">0</span>
+      </div>
+      <div class="bar-row">
+        <span class="bar-lbl">Submitted</span>
+        <div class="bar-track"><div class="bar-fill" id="bar-submit" style="width:0%;background:#E74C3C;"></div></div>
+        <span class="bar-cnt" id="bc-submit">0</span>
+      </div>
+      <div class="bar-row">
+        <span class="bar-lbl">Reported</span>
+        <div class="bar-track"><div class="bar-fill" id="bar-report" style="width:0%;background:#27AE60;"></div></div>
+        <span class="bar-cnt" id="bc-report">0</span>
+      </div>
+    </div>
+
+    <div style="background:rgba(231,76,60,.06); border:1px solid rgba(231,76,60,.2); border-radius:10px; padding:18px 22px;">
+      <div style="font-size:14px; font-weight:600; color:#E74C3C; margin-bottom:6px;">📌 Key Finding</div>
+      <p style="font-size:14px; color:#8B949E; line-height:1.7;">
+        Only <strong style="color:#E6EDF3;">12 out of 150 recipients</strong> correctly reported the phishing email.
+        <strong style="color:#E74C3C;">28 users submitted their credentials</strong> to the fake page.
+        Regular training reduces submission rates by up to 70% over 12 months.
+      </p>
+    </div>
+  </div>
+</div>
+
+<!-- ======== PAGE 4: ABOUT ======== -->
+<div class="page" id="page-about">
+  <div style="padding:52px 48px;">
+    <div style="font-size:12px; color:#1E90FF; letter-spacing:2px; margin-bottom:8px;">ABOUT</div>
+    <h2 style="font-size:26px; font-weight:600; margin-bottom:24px;">Information Assurance Lab · GoPhish Demo</h2>
+
+    <div style="display:grid; grid-template-columns:1fr 1fr; gap:32px; flex-wrap:wrap;">
+      <div>
+        <div style="background:#161B22; border:1px solid #30363D; border-radius:12px; padding:24px; margin-bottom:16px;">
+          <h3 style="font-size:15px; margin-bottom:16px;">👥 Group Members</h3>
+          <div class="team-card">
+            <div class="team-avatar">AA</div>
+            <div>
+              <div style="font-weight:600; font-size:14px;">Areeba Abbas</div>
+              <div style="font-size:12px; color:#8B949E;">F2024408012</div>
+            </div>
+          </div>
+          <div class="team-card">
+            <div class="team-avatar">YZ</div>
+            <div>
+              <div style="font-weight:600; font-size:14px;">Yasaal Zahid</div>
+              <div style="font-size:12px; color:#8B949E;">F2024408030</div>
+            </div>
+          </div>
+        </div>
+        <div style="background:#161B22; border:1px solid #30363D; border-radius:12px; padding:24px;">
+          <h3 style="font-size:15px; margin-bottom:12px;">🎯 Project Objectives</h3>
+          <ul style="font-size:13px; color:#8B949E; line-height:2; padding-left:18px;">
+            <li>Understand how phishing attacks are constructed</li>
+            <li>Simulate a full campaign in a controlled environment</li>
+            <li>Analyse user susceptibility through metrics</li>
+            <li>Promote cybersecurity awareness</li>
+          </ul>
+        </div>
+      </div>
+      <div>
+        <div style="background:#161B22; border:1px solid #30363D; border-radius:12px; padding:24px; margin-bottom:16px;">
+          <h3 style="font-size:15px; margin-bottom:12px;">⚖️ Ethical Statement</h3>
+          <p style="font-size:13px; color:#8B949E; line-height:1.8;">
+            This project was conducted strictly for academic purposes within an isolated lab environment.
+            No real user data was collected. All demonstrations used simulated targets only.
+            Using GoPhish against real individuals without consent is illegal and unethical.
+          </p>
+        </div>
+        <div style="background:#161B22; border:1px solid #30363D; border-radius:12px; padding:24px;">
+          <h3 style="font-size:15px; margin-bottom:12px;">🛡️ How to Stay Safe</h3>
+          <ul style="font-size:13px; color:#8B949E; line-height:2; padding-left:18px;">
+            <li>Always check the full URL before entering credentials</li>
+            <li>Never click links in unsolicited emails</li>
+            <li>Enable two-factor authentication on all accounts</li>
+            <li>Report suspicious emails to your IT team</li>
+            <li>If unsure, navigate directly to the website</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- FOOTER -->
+<footer style="text-align:center; padding:24px; font-size:12px; color:#484F58; border-top:1px solid #30363D;">
+  Information Assurance Lab · GoPhish Simulation · Academic Use Only · All data is simulated
+</footer>
+
+<script>
+  function showPage(name, el) {
+    document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+    document.querySelectorAll('.nav-links a').forEach(a => a.classList.remove('active'));
+    document.getElementById('page-' + name).classList.add('active');
+    if (el) el.classList.add('active');
+    window.scrollTo(0, 0);
+    if (name === 'dashboard') animateDash();
+  }
+
+  function submitPhish() {
+    const u = document.getElementById('rd-user').value.trim();
+    const p = document.getElementById('rd-pass').value.trim();
+    if (!u || !p) {
+      document.getElementById('rd-user').style.borderColor = '#e74c3c';
+      document.getElementById('rd-pass').style.borderColor = '#e74c3c';
+      return;
+    }
+    const log = document.getElementById('server-log');
+    const now = new Date().toLocaleTimeString();
+    log.innerHTML += `<div style="color:#F39C12">[${now}] LINK_CLICKED — target loaded fake Reddit page</div>`;
+    setTimeout(() => {
+      log.innerHTML += `<div style="color:#E74C3C">[${now}] DATA_SUBMITTED — username: "${u}" captured</div>`;
+    }, 600);
+    document.getElementById('login-form').style.display = 'none';
+    document.getElementById('caught-screen').style.display = 'block';
+  }
+
+  function resetDemo() {
+    document.getElementById('rd-user').value = '';
+    document.getElementById('rd-pass').value = '';
+    document.getElementById('rd-user').style.borderColor = '#edeff1';
+    document.getElementById('rd-pass').style.borderColor = '#edeff1';
+    document.getElementById('login-form').style.display = 'block';
+    document.getElementById('caught-screen').style.display = 'none';
+  }
+
+  let dashAnimated = false;
+  function animateDash() {
+    if (dashAnimated) return;
+    dashAnimated = true;
+    const targets = { sent:150, open:94, click:61, submit:28, report:12 };
+    const duration = 1400;
+    const start = Date.now();
+    function tick() {
+      const t = Math.min((Date.now()-start)/duration, 1);
+      const ease = 1 - Math.pow(1-t, 3);
+      const s = Math.round(targets.sent*ease);
+      const o = Math.round(targets.open*ease);
+      const c = Math.round(targets.click*ease);
+      const sb = Math.round(targets.submit*ease);
+      const r = Math.round(targets.report*ease);
+      document.getElementById('m-sent').textContent = s;
+      document.getElementById('m-open').textContent = o;
+      document.getElementById('m-click').textContent = c;
+      document.getElementById('m-submit').textContent = sb;
+      document.getElementById('m-open-pct').textContent = s ? (o/150*100).toFixed(1)+'% open rate' : '—';
+      document.getElementById('m-click-pct').textContent = s ? (c/150*100).toFixed(1)+'% click rate' : '—';
+      document.getElementById('m-submit-pct').textContent = s ? (sb/150*100).toFixed(1)+'% compromise rate' : '—';
+      document.getElementById('bar-sent').style.width = (s/150*100)+'%';
+      document.getElementById('bar-open').style.width = (o/150*100)+'%';
+      document.getElementById('bar-click').style.width = (c/150*100)+'%';
+      document.getElementById('bar-submit').style.width = (sb/150*100)+'%';
+      document.getElementById('bar-report').style.width = (r/150*100)+'%';
+      document.getElementById('bc-sent').textContent = s;
+      document.getElementById('bc-open').textContent = o;
+      document.getElementById('bc-click').textContent = c;
+      document.getElementById('bc-submit').textContent = sb;
+      document.getElementById('bc-report').textContent = r;
+      if (t < 1) requestAnimationFrame(tick);
+    }
+    requestAnimationFrame(tick);
+  }
+</script>
+
+</body>
+</html>
