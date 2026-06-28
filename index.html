@@ -19,15 +19,11 @@
     .nav-links a:hover, .nav-links a.active { background: #21262D; color: #E6EDF3; }
     .page { display: none; min-height: 100vh; padding-top: 56px; }
     .page.active { display: block; }
-
-    /* DASHBOARD BARS */
     .bar-track { flex:1; background:#21262D; border-radius:4px; height:10px; overflow:hidden; }
     .bar-fill { height:100%; border-radius:4px; transition: width 1.4s cubic-bezier(0.22,1,0.36,1); }
     .bar-row { display:flex; align-items:center; gap:12px; margin-bottom:14px; }
     .bar-lbl { font-size:13px; color:#8B949E; width:80px; }
     .bar-cnt { font-size:13px; color:#E6EDF3; width:30px; text-align:right; }
-
-    /* REDDIT STYLES */
     .reddit-wrap { background:#fff; border-radius:8px; padding:28px 24px; max-width:280px; margin:0 auto; }
     .reddit-logo { text-align:center; margin-bottom:18px; }
     .reddit-input {
@@ -42,8 +38,6 @@
       cursor:pointer; margin-top:4px;
     }
     .reddit-btn:hover { background:#e03d00; }
-
-    /* ABOUT */
     .team-card { display:flex; align-items:center; gap:12px; background:#161B22; border:1px solid #30363D; border-radius:10px; padding:14px 18px; margin-bottom:10px; }
     .team-avatar { width:40px; height:40px; border-radius:50%; background:#1E90FF; display:flex; align-items:center; justify-content:center; font-weight:700; font-size:14px; }
   </style>
@@ -145,7 +139,7 @@
       <div style="flex:1; min-width:140px; background:#161B22; border:1px solid #30363D; border-radius:10px; padding:18px;">
         <div style="font-size:11px; color:#1E90FF; margin-bottom:6px;">STEP 04</div>
         <h4 style="font-size:13px; margin-bottom:4px;">Credentials Stolen</h4>
-        <p style="font-size:12px; color:#8B949E;">Username and password captured</p>
+        <p style="font-size:12px; color:#8B949E;">Username and password captured and saved</p>
       </div>
     </div>
   </div>
@@ -188,7 +182,8 @@
               <div id="caught-screen" style="display:none; text-align:center; padding:10px 0;">
                 <div style="font-size:36px; margin-bottom:10px;">⚠️</div>
                 <div style="font-size:16px; font-weight:700; color:#E74C3C; margin-bottom:8px;">You've been phished!</div>
-                <p style="font-size:12px; color:#666; margin-bottom:14px;">Your credentials were just captured. This is a simulation — no real data was stored.</p>
+                <p style="font-size:12px; color:#666; margin-bottom:6px;">Your credentials were captured and saved to a text file.</p>
+                <p style="font-size:12px; color:#666; margin-bottom:14px;">This is a simulation — for educational purposes only.</p>
                 <button onclick="resetDemo()" style="background:#FF4500; color:#fff; border:none; border-radius:20px; padding:8px 20px; cursor:pointer; font-weight:700;">Try Again</button>
               </div>
             </div>
@@ -198,16 +193,24 @@
 
       <!-- RIGHT: Server Log -->
       <div>
-        <div style="background:#0D1117; border:1px solid #30363D; border-radius:12px; padding:20px;">
+        <div style="background:#0D1117; border:1px solid #30363D; border-radius:12px; padding:20px; margin-bottom:16px;">
           <div style="font-size:12px; color:#1E90FF; margin-bottom:12px; font-family:monospace;">📡 GoPhish Server Log</div>
           <div id="server-log" style="font-family:monospace; font-size:12px; color:#27AE60; min-height:120px; line-height:1.8;">
             <div style="color:#8B949E;">[System] Waiting for target interaction...</div>
           </div>
         </div>
-        <div style="margin-top:16px; background:rgba(231,76,60,.06); border:1px solid rgba(231,76,60,.2); border-radius:10px; padding:18px;">
+
+        <!-- Captured credentials display -->
+        <div id="credentials-box" style="display:none; background:#0D1117; border:1px solid #27AE60; border-radius:12px; padding:20px; margin-bottom:16px;">
+          <div style="font-size:12px; color:#27AE60; margin-bottom:12px; font-family:monospace;">📁 Saved to: captured_credentials.txt</div>
+          <div id="credentials-display" style="font-family:monospace; font-size:12px; color:#E6EDF3; line-height:1.8; background:#161B22; padding:12px; border-radius:8px;">
+          </div>
+        </div>
+
+        <div style="background:rgba(231,76,60,.06); border:1px solid rgba(231,76,60,.2); border-radius:10px; padding:18px;">
           <div style="font-size:14px; font-weight:600; color:#E74C3C; margin-bottom:6px;">⚠️ What just happened?</div>
           <p style="font-size:13px; color:#8B949E; line-height:1.7;">
-            The URL looks like Reddit but it is a fake domain. GoPhish hosts this cloned page and captures everything you type. This is exactly how real attackers steal credentials.
+            The URL looks like Reddit but it is a fake domain. GoPhish captures everything typed and saves it to a text file. This is exactly how real attackers steal and store credentials.
           </p>
         </div>
       </div>
@@ -290,7 +293,7 @@
     <div style="font-size:12px; color:#1E90FF; letter-spacing:2px; margin-bottom:8px;">ABOUT</div>
     <h2 style="font-size:26px; font-weight:600; margin-bottom:24px;">Information Assurance Lab · GoPhish Demo</h2>
 
-    <div style="display:grid; grid-template-columns:1fr 1fr; gap:32px; flex-wrap:wrap;">
+    <div style="display:grid; grid-template-columns:1fr 1fr; gap:32px;">
       <div>
         <div style="background:#161B22; border:1px solid #30363D; border-radius:12px; padding:24px; margin-bottom:16px;">
           <h3 style="font-size:15px; margin-bottom:16px;">👥 Group Members</h3>
@@ -366,12 +369,47 @@
       document.getElementById('rd-pass').style.borderColor = '#e74c3c';
       return;
     }
+
+    // Show server log
     const log = document.getElementById('server-log');
-    const now = new Date().toLocaleTimeString();
-    log.innerHTML += `<div style="color:#F39C12">[${now}] LINK_CLICKED — target loaded fake Reddit page</div>`;
+    const now = new Date().toLocaleString();
+    const time = new Date().toLocaleTimeString();
+    log.innerHTML += `<div style="color:#F39C12">[${time}] LINK_CLICKED — target loaded fake Reddit page</div>`;
     setTimeout(() => {
-      log.innerHTML += `<div style="color:#E74C3C">[${now}] DATA_SUBMITTED — username: "${u}" captured</div>`;
+      log.innerHTML += `<div style="color:#E74C3C">[${time}] DATA_SUBMITTED — username: "${u}" captured</div>`;
+      log.innerHTML += `<div style="color:#27AE60">[${time}] FILE_SAVED — credentials.txt written successfully</div>`;
     }, 600);
+
+    // Save credentials to text file — downloads automatically
+    const fileContent =
+`===== GoPhish Lab - Captured Credentials =====
+Date & Time : ${now}
+Username    : ${u}
+Password    : ${p}
+Target Page : Fake Reddit Login
+Fake URL    : reddit-account-verify.net/login
+Campaign    : Information Assurance Lab Simulation
+==============================================
+NOTE: This is a simulated capture for educational
+purposes only. No real data was transmitted.
+==============================================`;
+
+    const blob = new Blob([fileContent], { type: 'text/plain' });
+    const a = document.createElement('a');
+    a.href = URL.createObjectURL(blob);
+    a.download = 'captured_credentials.txt';
+    a.click();
+
+    // Show credentials in the green box on screen
+    const box = document.getElementById('credentials-box');
+    const display = document.getElementById('credentials-display');
+    display.innerHTML =
+      `Date & Time : ${now}<br>` +
+      `Username    : <span style="color:#E74C3C">${u}</span><br>` +
+      `Password    : <span style="color:#E74C3C">${p}</span><br>` +
+      `Saved to    : <span style="color:#27AE60">captured_credentials.txt</span>`;
+    box.style.display = 'block';
+
     document.getElementById('login-form').style.display = 'none';
     document.getElementById('caught-screen').style.display = 'block';
   }
@@ -383,6 +421,7 @@
     document.getElementById('rd-pass').style.borderColor = '#edeff1';
     document.getElementById('login-form').style.display = 'block';
     document.getElementById('caught-screen').style.display = 'none';
+    document.getElementById('credentials-box').style.display = 'none';
   }
 
   let dashAnimated = false;
